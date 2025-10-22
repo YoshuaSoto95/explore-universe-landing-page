@@ -1,16 +1,28 @@
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import "../styles/Header.css";
+import { useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  type Variants,
+  cubicBezier,
+  type Easing,
+} from "framer-motion";
 
-const HEADER_EASE = [0.22, 1, 0.36, 1];
+// Cubic-bezier tipado como EasingFunction (OK para Transition.ease)
+const HEADER_EASE: Easing = cubicBezier(0.22, 1, 0.36, 1);
 
-const menuPanelVariants = {
+const menuPanelVariants: Variants = {
   hidden: { x: "100%" },
-  visible: { x: 0, transition: { duration: 0.35, ease: HEADER_EASE } },
-  exit: { x: "100%", transition: { duration: 0.3, ease: HEADER_EASE } },
+  visible: {
+    x: 0,
+    transition: { duration: 0.35, ease: HEADER_EASE },
+  },
+  exit: {
+    x: "100%",
+    transition: { duration: 0.3, ease: HEADER_EASE },
+  },
 };
 
-const listVariants = {
+const listVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -26,7 +38,7 @@ const listVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { y: -14, opacity: 0 },
   visible: {
     y: 0,
@@ -42,13 +54,6 @@ const itemVariants = {
 
 export default function Header() {
   const [open, setOpen] = useState(false);
-  const [mount, setMount] = useState(false);
-
-  // animación de entrada del header (de arriba hacia abajo + fade-in)
-  useEffect(() => {
-    const t = requestAnimationFrame(() => setMount(true));
-    return () => cancelAnimationFrame(t);
-  }, []);
 
   const closeMenu = () => setOpen(false);
 
@@ -60,7 +65,6 @@ export default function Header() {
       transition={{ duration: 0.45, ease: HEADER_EASE }}
     >
       <div className="container site-header__row">
-        {/* brand */}
         <a href="#hero" className="site-header__brand" onClick={closeMenu}>
           <span className="site-header__logo" aria-hidden>
             ◐
@@ -88,7 +92,6 @@ export default function Header() {
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
         >
-          {/* hamburguesa / X */}
           <span className="toggle__bar" />
           <span className="toggle__bar" />
           <span className="toggle__bar" />
@@ -108,6 +111,19 @@ export default function Header() {
             animate="visible"
             exit="exit"
           >
+            <div className="mobile-panel__header">
+              <span className="brand__text">
+                <span className="brand__shine">Event Horizon</span>
+              </span>
+              <button
+                className="mobile-close"
+                aria-label="Close menu"
+                onClick={closeMenu}
+              >
+                ×
+              </button>
+            </div>
+
             <motion.ul
               className="mobile-nav"
               variants={listVariants}
