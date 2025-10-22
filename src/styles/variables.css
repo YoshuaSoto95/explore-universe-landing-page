@@ -1,0 +1,9 @@
+:root {
+  --bg: #050508;
+  --text: #e8e8ff;
+  --muted: #b7b7cc;
+  --accent: #7d79ff; /* toque violeta-azulado */
+  --maxw: 1200px;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}

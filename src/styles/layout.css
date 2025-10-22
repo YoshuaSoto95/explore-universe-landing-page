@@ -1,0 +1,205 @@
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.btn--accent {
+  border: 1px solid rgba(125, 121, 255, 0.3);
+  background: radial-gradient(
+    120% 120% at 10% 0%,
+    rgba(125, 121, 255, 0.28) 0%,
+    rgba(125, 121, 255, 0.08) 40%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+}
+
+/* ===== Header ===== */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 20;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 8, 0.9),
+    rgba(5, 5, 8, 0.6),
+    transparent
+  );
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+}
+.site-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.site-header__logo {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(
+    120% 120% at 30% 30%,
+    rgba(125, 121, 255, 0.6),
+    rgba(125, 121, 255, 0.08)
+  );
+  box-shadow: 0 0 20px rgba(125, 121, 255, 0.4);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.site-nav a {
+  opacity: 0.92;
+}
+.site-nav a:hover {
+  opacity: 1;
+}
+
+/* Toggle (mobile) */
+.site-header__toggle {
+  display: none;
+  background: none;
+  color: var(--text);
+  border: 0;
+  font-size: 22px;
+  line-height: 1;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+@media (max-width: 880px) {
+  .site-header__toggle {
+    display: inline-block;
+  }
+  .site-nav {
+    position: absolute;
+    top: 64px;
+    right: 20px;
+    left: 20px;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(10, 10, 16, 0.9);
+    backdrop-filter: blur(8px);
+    transform-origin: top right;
+    transform: scale(0.98);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .site-nav.is-open {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ===== Hero with video background ===== */
+.hero {
+  position: relative;
+  min-height: 100svh; /* viewport alto seguro en móviles */
+  display: grid;
+  align-items: center;
+  padding-top: 64px; /* header fijo */
+  isolation: isolate; /* para gestionar overlays */
+  overflow: clip;
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.06) brightness(0.9);
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(
+      80% 60% at 50% 55%,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(5, 5, 8, 0.2) 50%,
+      rgba(5, 5, 8, 0.65) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(5, 5, 8, 0.8) 0%,
+      rgba(5, 5, 8, 0.3) 40%,
+      rgba(5, 5, 8, 0) 70%
+    );
+  pointer-events: none;
+}
+
+/* contenido */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  padding-block: 64px;
+}
+
+.hero__title {
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+  text-wrap: balance;
+}
+.hero__title span {
+  color: var(--accent);
+  text-shadow: 0 0 24px rgba(125, 121, 255, 0.45);
+}
+
+.hero__subtitle {
+  max-width: 680px;
+  color: var(--muted);
+  margin: 0 0 26px;
+}
+
+.hero__cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
