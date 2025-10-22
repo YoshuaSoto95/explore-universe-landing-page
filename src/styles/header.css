@@ -46,7 +46,7 @@
   opacity: 1;
 }
 
-/* CTA con "pulse" y hover scale */
+/* ========= CTA principal con pulse en gradiente ========= */
 .btn--cta {
   border: 1px solid rgba(125, 121, 255, 0.4);
   background: radial-gradient(
@@ -55,22 +55,32 @@
       rgba(125, 121, 255, 0.08) 40%,
       rgba(255, 255, 255, 0.03) 100%
     ),
-    linear-gradient(90deg, rgba(125, 121, 255, 0.22), rgba(125, 121, 255, 0.06));
-  position: relative;
-  overflow: hidden;
+    linear-gradient(
+      120deg,
+      var(--hero-grad-a),
+      var(--hero-grad-b),
+      var(--hero-grad-c)
+    );
+  background-size: 200% 100%, 200% 100%;
+  color: var(--text);
+  animation: heroGradientMove 6s linear infinite,
+    heroPulse 2.2s ease-in-out infinite;
   transform: translateZ(0);
-  animation: pulse-bg 2.2s ease-in-out infinite;
+  will-change: transform, box-shadow, background-position;
 }
 .btn--cta:hover {
+  color: var(--text) !important;
   transform: scale(1.1);
 }
-.btn--full {
-  display: block;
-  text-align: center;
-  width: 100%;
+@keyframes heroGradientMove {
+  0% {
+    background-position: 0% 0%, 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%, 200% 0%;
+  }
 }
-
-@keyframes pulse-bg {
+@keyframes heroPulse {
   0%,
   100% {
     box-shadow: 0 0 0 0 rgba(125, 121, 255, 0.45);

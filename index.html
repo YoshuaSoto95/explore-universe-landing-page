@@ -2,20 +2,81 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link
-      rel="shortcut icon"
-      href="./src/assets/favicon.png"
-      type="image/x-icon"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>
+      Explore Universe — Experimental Black Hole Landing (React + TypeScript)
+    </title>
     <meta
       name="description"
-      content="A minimal, cinematic playground built with React + TypeScript + pure CSS. Background powered by a black hole video frame."
+      content="Explore Universe: an experimental landing that explores cinematic space visuals, a black hole reversible loop, and smooth interactions built with React + TypeScript and pure CSS."
     />
-    <title>Explore Universe | Landing Page</title>
+    <meta name="theme-color" content="#050508" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://example.com/" />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="Explore Universe — Experimental Black Hole Landing"
+    />
+    <meta
+      property="og:description"
+      content="Cinematic black hole loop, smooth interactions, and space-inspired UI. Built with React + TypeScript."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://example.com/" />
+    <meta
+      property="og:image"
+      content="https://example.com/og-explore-universe.jpg"
+    />
+    <meta
+      property="og:image:alt"
+      content="Explore Universe — a black hole glowing in space"
+    />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Explore Universe — Experimental Black Hole Landing"
+    />
+    <meta
+      name="twitter:description"
+      content="Cinematic black hole loop and space-inspired UI. React + TypeScript + CSS."
+    />
+    <meta
+      name="twitter:image"
+      content="https://example.com/og-explore-universe.jpg"
+    />
+
+    <!-- Structured Data: Website + WebPage -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Explore Universe",
+            "url": "https://example.com/",
+            "description": "Experimental space-themed landing built with React and TypeScript."
+          },
+          {
+            "@type": "WebPage",
+            "name": "Explore Universe — Experimental Black Hole Landing",
+            "url": "https://example.com/",
+            "description": "Explore Universe is an experimental landing with a cinematic black hole loop and smooth UI interactions."
+          }
+        ]
+      }
+    </script>
+
+    <!-- Vite entry -->
+    <script type="module" src="/src/main.tsx"></script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

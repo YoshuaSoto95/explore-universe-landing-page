@@ -1,3 +1,4 @@
+import "../styles/hero.css";
 export default function Hero() {
   return (
     <section id="hero" className="hero">
@@ -19,14 +20,15 @@ export default function Hero() {
       {/* Contenido */}
       <div className="container hero__content">
         <h1 className="hero__title">
-          Experimental Landing: <span>Event Horizon</span>
+          Explore Universe — <span>Black Hole Experiment</span>
         </h1>
         <p className="hero__subtitle">
-          A minimal, cinematic playground built with React + TypeScript + pure
-          CSS. Background powered by a black hole video frame.
+          Explore Universe is an experimental landing showcasing a cinematic
+          black hole loop built with React + TypeScript and pure CSS. Discover
+          motion, parallax, and interactive visuals optimized for performance.
         </p>
         <div className="hero__cta">
-          <a href="#experiments" className="btn btn--accent">
+          <a href="#experiments" className="btn btn--cta btn--cta-primary">
             See Experiments
           </a>
           <a href="#about" className="btn">
