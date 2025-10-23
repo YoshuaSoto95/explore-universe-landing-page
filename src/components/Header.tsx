@@ -1,4 +1,5 @@
-import { useState } from "react";
+// src/components/Header.tsx
+import { useEffect, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -7,74 +8,58 @@ import {
   type Easing,
 } from "framer-motion";
 
-// Cubic-bezier tipado como EasingFunction (OK para Transition.ease)
-const HEADER_EASE: Easing = cubicBezier(0.22, 1, 0.36, 1);
+const EASE: Easing = cubicBezier(0.22, 1, 0.36, 1);
 
-const menuPanelVariants: Variants = {
+const panelVariants: Variants = {
   hidden: { x: "100%" },
-  visible: {
-    x: 0,
-    transition: { duration: 0.35, ease: HEADER_EASE },
-  },
-  exit: {
-    x: "100%",
-    transition: { duration: 0.3, ease: HEADER_EASE },
-  },
+  visible: { x: 0, transition: { duration: 0.35, ease: EASE } },
+  exit: { x: "100%", transition: { duration: 0.3, ease: EASE } },
 };
 
 const listVariants: Variants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.05,
-    },
-  },
-  exit: {
-    transition: {
-      staggerChildren: 0.05,
-      staggerDirection: -1,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+  exit: { transition: { staggerChildren: 0.05, staggerDirection: -1 } },
 };
 
 const itemVariants: Variants = {
   hidden: { y: -14, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.25, ease: HEADER_EASE },
-  },
-  exit: {
-    y: -14,
-    opacity: 0,
-    transition: { duration: 0.2, ease: HEADER_EASE },
-  },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.25, ease: EASE } },
+  exit: { y: -14, opacity: 0, transition: { duration: 0.2, ease: EASE } },
 };
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const toggle = () => setOpen((v) => !v);
+  const close = () => setOpen(false);
 
-  const closeMenu = () => setOpen(false);
+  // Bloquear scroll cuando el panel móvil está abierto
+  useEffect(() => {
+    const cls = "no-scroll";
+    if (open) document.body.classList.add(cls);
+    else document.body.classList.remove(cls);
+    return () => document.body.classList.remove(cls);
+  }, [open]);
 
   return (
     <motion.header
       className="site-header"
       initial={{ y: -32, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.45, ease: HEADER_EASE }}
+      transition={{ duration: 0.45, ease: EASE }}
     >
       <div className="container site-header__row">
-        <a href="#hero" className="site-header__brand" onClick={closeMenu}>
+        {/* Brand */}
+        <a href="#hero" className="site-header__brand" onClick={close}>
           <span className="site-header__logo" aria-hidden>
             ◐
           </span>
           <strong className="brand__text">
-            <span className="brand__shine">Event Horizon</span>
+            <span className="brand__shine">Explore Universe</span>
           </strong>
         </a>
 
-        {/* nav desktop */}
+        {/* Nav desktop */}
         <nav className="site-nav" aria-label="Main">
           <a href="#hero">Home</a>
           <a href="#about">About</a>
@@ -84,10 +69,10 @@ export default function Header() {
           </a>
         </nav>
 
-        {/* toggle */}
+        {/* Toggle */}
         <button
           className={`site-header__toggle ${open ? "is-open" : ""}`}
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggle}
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -98,7 +83,21 @@ export default function Header() {
         </button>
       </div>
 
-      {/* panel móvil deslizante */}
+      {/* Overlay oscuro clicable (cierra panel) */}
+      <AnimatePresence>
+        {open && (
+          <motion.button
+            aria-label="Close menu overlay"
+            className="mobile-overlay"
+            onClick={close}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.2 } }}
+            exit={{ opacity: 0, transition: { duration: 0.15 } }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Panel móvil */}
       <AnimatePresence>
         {open && (
           <motion.aside
@@ -106,24 +105,11 @@ export default function Header() {
             className="mobile-panel"
             role="dialog"
             aria-modal="true"
-            variants={menuPanelVariants}
+            variants={panelVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
-            <div className="mobile-panel__header">
-              <span className="brand__text">
-                <span className="brand__shine">Event Horizon</span>
-              </span>
-              <button
-                className="mobile-close"
-                aria-label="Close menu"
-                onClick={closeMenu}
-              >
-                ×
-              </button>
-            </div>
-
             <motion.ul
               className="mobile-nav"
               variants={listVariants}
@@ -132,17 +118,17 @@ export default function Header() {
               exit="exit"
             >
               <motion.li variants={itemVariants}>
-                <a href="#hero" onClick={closeMenu}>
+                <a href="#hero" onClick={close}>
                   Home
                 </a>
               </motion.li>
               <motion.li variants={itemVariants}>
-                <a href="#about" onClick={closeMenu}>
+                <a href="#about" onClick={close}>
                   About
                 </a>
               </motion.li>
               <motion.li variants={itemVariants}>
-                <a href="#experiments" onClick={closeMenu}>
+                <a href="#experiments" onClick={close}>
                   Experiments
                 </a>
               </motion.li>
@@ -150,7 +136,7 @@ export default function Header() {
                 <a
                   className="btn btn--cta btn--full"
                   href="#contact"
-                  onClick={closeMenu}
+                  onClick={close}
                 >
                   Get Access
                 </a>

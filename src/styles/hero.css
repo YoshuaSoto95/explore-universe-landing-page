@@ -128,6 +128,7 @@
 /* ========= Responsive: centrado total ≤ 1024px ========= */
 @media (max-width: 1024px) {
   .hero__content {
+    padding: 0 4rem;
     justify-items: center;
     text-align: center;
   }
