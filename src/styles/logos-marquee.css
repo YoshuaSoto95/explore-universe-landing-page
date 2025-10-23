@@ -1,0 +1,148 @@
+/* =======================
+   Carrusel de Isotipos
+   ======================= */
+
+/* Ajusta velocidad aquí (más grande = más lento) */
+:root {
+  --logos-speed: 28s;
+}
+/* Sección full-bleed (sin márgenes/espacios a los bordes) */
+.logos {
+  position: relative;
+  padding: 0.5rem 0;
+  width: 100%;
+  overflow: hidden; /* importante: sin márgenes visibles */
+}
+
+/* Viewport del carrusel */
+.logos__viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Pista: duplicada para marquee infinito */
+.logos__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 6vw, 64px);
+  padding-block: clamp(16px, 3.2vw, 26px);
+  margin: 0;
+  list-style: none;
+  /* Animación: mover hacia la izquierda continuamente */
+  animation: logos-marquee var(--logos-speed) linear infinite;
+  will-change: transform;
+}
+
+/* Cada ítem (para texto o imágenes) */
+.logos__item {
+  flex: 0 0 auto;
+}
+
+/* ====== Estilo “píldora” con borde suave (opcional) ====== */
+.logo-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+
+/* Brillo diagonal que pasa por encima suavemente */
+.logo-pill::after {
+  content: "";
+  position: absolute;
+  inset: -20% -120%;
+  background: linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 60%
+  );
+  transform: translateX(-30%);
+  animation: logos-glint 3.6s linear infinite;
+  pointer-events: none;
+}
+
+/* Texto metálico animado (plata brillante) */
+.logo-metal {
+  background: linear-gradient(
+    120deg,
+    #9aa0b0 0%,
+    #f4f4f6 18%,
+    #bfc3ce 35%,
+    #ffffff 50%,
+    #c9ccd6 65%,
+    #9aa0b0 82%,
+    #eef0f6 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% 100%;
+  animation: metal-sweep 3.2s linear infinite;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* ====== Si usas imágenes/SVG en vez de texto ====== */
+.logo-img,
+.logo-svg {
+  height: 150px; /* ajusta a tu preferencia */
+  display: block;
+  filter: saturate(0) brightness(1.15) contrast(1.2);
+  opacity: 0.95;
+  /* “plateado” con mezcla */
+  mix-blend-mode: screen;
+}
+
+/* Hover opcional: pausa el carrusel */
+.logos__viewport:hover .logos__track {
+  animation-play-state: paused;
+}
+
+/* Animaciones clave */
+@keyframes logos-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  } /* la segunda mitad es el duplicado */
+}
+@keyframes metal-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
+}
+@keyframes logos-glint {
+  0% {
+    transform: translateX(-30%) rotate(0.001deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateX(60%) rotate(0.001deg);
+    opacity: 0;
+  }
+}
+
+/* Accesibilidad: respeta reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .logos__track,
+  .logo-metal,
+  .logo-pill::after {
+    animation: none !important;
+  }
+}
